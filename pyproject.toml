@@ -1,5 +1,5 @@
 [project]
-name = "copilot-gpt-free-api"
+name = "gpt4-copilot-free-api"
 version = "0.1.0"
 description = "Default template for PDM package"
 authors = [

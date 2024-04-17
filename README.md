@@ -1,1 +1,1 @@
-# copilot-gpt-free-api
+# gpt4-copilot-free-api
