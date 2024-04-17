@@ -3,7 +3,8 @@ import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { renderMarkdown } from "@/lib/utils";
 import { ModeToggle } from "./mode-toggle";
-
+// import hljs from 'highlight.js';
+import 'highlight.js/styles/github-dark.css';
 type ChatMessage = {
     content: string,
     role: "assistant" | "user"
