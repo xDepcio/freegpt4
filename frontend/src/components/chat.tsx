@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { renderMarkdown } from "@/lib/utils";
 import { ModeToggle } from "./mode-toggle";
-// import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark.css';
+import ReactDOM from 'react-dom';
+import { IoClipboardOutline } from "react-icons/io5";
+
 type ChatMessage = {
     content: string,
     role: "assistant" | "user"
@@ -26,6 +28,31 @@ async function getCompletions(chat: Chat) {
     return data;
 }
 
+
+
+function addCodeCopyButtons() {
+    const codeBlocks = document.querySelectorAll('pre');
+    codeBlocks.forEach((codeBlock) => {
+        const copyDiv = document.createElement('div');
+        copyDiv.style.position = 'absolute';
+        copyDiv.style.top = '0.5rem';
+        copyDiv.style.right = '0.5rem';
+        codeBlock.appendChild(copyDiv);
+        // @ts-ignore
+        codeBlock.style.position = 'relative';
+        const CopyButton =
+            <Button onClick={() => {
+                navigator.clipboard.writeText(codeBlock.children[0].textContent || '');
+            }} className="text-xs dark:bg-zinc-700 text-zinc-100 gap-2 px-2 h-fit py-2">
+                <IoClipboardOutline />
+                <p>copy code</p>
+            </Button>
+        const reactElement = React.createElement(CopyButton.type, CopyButton.props);
+        ReactDOM.render(reactElement, copyDiv);
+    });
+
+}
+
 export default function Chat() {
     const [inputQuestion, setInputQuestion] = useState('' as string)
     const [markdownResponse, setMarkdownResponse] = useState('' as string)
@@ -45,6 +72,7 @@ export default function Chat() {
             if (markdownContainer) {
                 const htmlContent = renderMarkdown(markdownResponse);
                 markdownContainer.innerHTML = htmlContent;
+                addCodeCopyButtons()
             }
         }
 
