@@ -57,9 +57,9 @@ export default function Chat() {
     }, [chat])
 
     return (
-        <main className="min-h-screen min-w-full h-full">
+        <main className="min-h-screen min-w-full h-full dark:bg-zinc-800">
             <ModeToggle />
-            <div className="max-w-screen-lg mx-auto flex flex-col justify-between h-screen">
+            <div className="max-w-screen-md mx-auto flex flex-col justify-between h-screen">
                 <div className="py-6" id='markdown-container'>
                     dsd
                 </div>
