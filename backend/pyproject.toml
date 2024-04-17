@@ -5,7 +5,9 @@ description = "Default template for PDM package"
 authors = [
     {name = "xDepcio", email = "olek.drwal@gmail.com"},
 ]
-dependencies = []
+dependencies = [
+    "flask>=3.0.3",
+]
 requires-python = ">=3.12"
 readme = "README.md"
 license = {text = "MIT"}
