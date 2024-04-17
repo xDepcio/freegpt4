@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import Chat from './components/chat.tsx'
+import { ThemeProvider } from './components/theme-provider.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    {/* <App /> */}
-    <Chat />
+    <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
+
+      {/* <App /> */}
+      <Chat />
+    </ThemeProvider>
   </React.StrictMode>,
 )

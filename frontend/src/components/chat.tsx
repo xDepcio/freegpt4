@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { renderMarkdown } from "@/lib/utils";
+import { ModeToggle } from "./mode-toggle";
 
 type ChatMessage = {
     content: string,
@@ -56,13 +57,15 @@ export default function Chat() {
     }, [chat])
 
     return (
-        <main className="dark:bg-zinc-900 min-h-screen min-w-full">
+        <main className="min-h-screen min-w-full h-full">
+            <ModeToggle />
             <div className="max-w-screen-lg mx-auto flex flex-col justify-between h-screen">
                 <div className="py-6" id='markdown-container'>
                     dsd
                 </div>
                 <div className="py-6">
                     <Textarea
+                        className="dark:bg-zinc-900"
                         value={inputQuestion}
                         onChange={(e) => {
                             console.log(inputQuestion)
