@@ -20,3 +20,6 @@ build-backend = "pdm.backend"
 
 [tool.pdm]
 distribution = true
+
+[project.entry-points."console_scripts"]
+freegpt4 = "gpt4_copilot_free_api.server:main"
