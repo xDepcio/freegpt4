@@ -15,6 +15,11 @@ def catch_all(path):
     return render_template("index.html")
 
 
+@app.route("/complete", methods=["POST"])
+def complete():
+    return "# Hello, World! \n**this is bold** and this not \n```python\nprint('Hello, World!')\n```"
+
+
 # @app.route("/")
 # def serve():
 #     """Serves the React app."""

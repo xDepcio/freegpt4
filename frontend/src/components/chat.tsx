@@ -3,14 +3,21 @@ import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { renderMarkdown } from "@/lib/utils";
 
-async function getCompletions(question: string) {
-    const response = await fetch('http://localhost:8080/complete', {
+type ChatMessage = {
+    content: string,
+    role: "assistant" | "user"
+}
+
+type Chat = ChatMessage[]
+
+async function getCompletions(chat: Chat) {
+    const response = await fetch('/api/complete', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            question
+            chat
         })
     });
     const data = await response.text();
@@ -18,11 +25,14 @@ async function getCompletions(question: string) {
 }
 
 export default function Chat() {
-    const [question, setQuestion] = useState('' as string)
+    const [inputQuestion, setInputQuestion] = useState('' as string)
     const [markdownResponse, setMarkdownResponse] = useState('' as string)
+    const [chat, setChat] = useState([] as Chat)
 
     const handleQuestionSubmit = useCallback(async () => {
-        const completions = await getCompletions(question);
+        setChat((prevChat) => [...prevChat, { content: inputQuestion, role: 'user' }])
+        const completions = await getCompletions([...chat, { content: inputQuestion, role: 'user' }]);
+        setChat((prevChat) => [...prevChat, { content: completions, role: 'assistant' }])
         setMarkdownResponse(completions);
     }, [])
 
@@ -37,6 +47,13 @@ export default function Chat() {
 
     }, [markdownResponse])
 
+    useEffect(() => {
+        const markdown = chat.map((message) => {
+            return `**${message.role}:** ${message.content}`
+        }).join('\n\n');
+        setMarkdownResponse(markdown)
+    }, [chat])
+
     return (
         <main className="dark:bg-zinc-900 min-h-screen min-w-full">
             <div className="max-w-screen-lg mx-auto flex flex-col justify-between h-screen">
@@ -45,8 +62,8 @@ export default function Chat() {
                 </div>
                 <div className="py-6">
                     <Textarea
-                        value={question}
-                        onChange={(e) => setQuestion(e.target.value)}
+                        value={inputQuestion}
+                        onChange={(e) => setInputQuestion(e.target.value)}
                         placeholder="Enter your prompt"
                     />
                     <Button onClick={handleQuestionSubmit}>
