@@ -103,7 +103,7 @@ def catch_all(path):
     return render_template("index.html")
 
 
-@app.route("/complete", methods=["POST"])
+@app.route("/api/complete", methods=["POST"])
 def complete():
     if not request.json:
         return {"error": "No JSON body provided"}
