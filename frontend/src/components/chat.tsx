@@ -29,12 +29,13 @@ export default function Chat() {
     const [markdownResponse, setMarkdownResponse] = useState('' as string)
     const [chat, setChat] = useState([] as Chat)
 
-    const handleQuestionSubmit = useCallback(async () => {
+    const handleQuestionSubmit = async () => {
+        console.log(inputQuestion)
         setChat((prevChat) => [...prevChat, { content: inputQuestion, role: 'user' }])
         const completions = await getCompletions([...chat, { content: inputQuestion, role: 'user' }]);
         setChat((prevChat) => [...prevChat, { content: completions, role: 'assistant' }])
         setMarkdownResponse(completions);
-    }, [])
+    }
 
     useEffect(() => {
         if (markdownResponse) {
@@ -63,7 +64,10 @@ export default function Chat() {
                 <div className="py-6">
                     <Textarea
                         value={inputQuestion}
-                        onChange={(e) => setInputQuestion(e.target.value)}
+                        onChange={(e) => {
+                            console.log(inputQuestion)
+                            setInputQuestion(e.target.value)
+                        }}
                         placeholder="Enter your prompt"
                     />
                     <Button onClick={handleQuestionSubmit}>
