@@ -9,7 +9,7 @@ app = Flask(
     template_folder="../../../frontend/dist",
 )
 
-MODEL = "gpt-4-1106-preview"
+MODEL = "gpt-4o"
 token = None
 
 
